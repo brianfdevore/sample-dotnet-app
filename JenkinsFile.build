@@ -1,8 +1,8 @@
 pipeline {
     agent none
-    options {
-        // ansiColor('xterm')
-    }
+    //options {
+    //    ansiColor('xterm')
+    //}
     stages {
         stage ('Build') {
             agent { label 'windows-slave' }
