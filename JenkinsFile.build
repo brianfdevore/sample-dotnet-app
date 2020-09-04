@@ -1,12 +1,14 @@
 pipeline {
-    agent any
+    agent { label 'windows-slave' }
     options {
         ansiColor('xterm')
     }
     stages {
         stage ('Build') {
             steps {
-                echo 'Building...'
+                echo 'Building application package...'
+                bat 'dotnet clean'
+                bat 'dotnet build'
             }
         }
         stage ('Test') {
@@ -16,7 +18,10 @@ pipeline {
         }
         stage ('Deploy') {
             steps {
-                echo 'Deploying...'
+                echo 'Deploying application package to GCS bucket...'
+                bat 'dotnet publish -c Release -o C:\temp\publish'
+                bat 'powershell.exe Compress-Archive C:\temp\publish\ C:\temp\deploy\deploy_pkg.zip'
+                bat 'gsutil cp C:\temp\deploy\deploy_pkg.zip gs://artifacts-sab-dev-sand-shs-temp-9341-windows-sample-app/deploy_pkg.zip'
             }
         }
     }
