@@ -1,11 +1,11 @@
 pipeline {
-    agent none
+    agent any
     //options {
     //    ansiColor('xterm')
     //}
     stages {
         stage ('Build') {
-            agent { label 'windows-slave' }
+            //agent { label 'windows-slave' }
             steps {
                 echo 'Building application package...'
                 bat 'dotnet clean'
@@ -13,13 +13,13 @@ pipeline {
             }
         }
         stage ('Test') {
-            agent { label 'windows-slave' }
+            //agent { label 'windows-slave' }
             steps {
                 echo 'Testing...'
             }
         }
         stage ('Deploy') {
-            agent { label 'windows-slave' }
+            //agent { label 'windows-slave' }
             steps {
                 echo 'Deploying application package to GCS bucket...'
                 bat 'dotnet publish -c Release -o C:\\temp\\publish'
