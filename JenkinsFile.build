@@ -25,6 +25,7 @@ pipeline {
                 bat 'dotnet publish -c Release -o C:\\temp\\publish'
                 bat 'powershell.exe Compress-Archive C:\\temp\\publish\\ C:\\temp\\deploy_pkg.zip'
                 bat 'gsutil cp C:\\temp\\deploy_pkg.zip gs://artifacts-sab-dev-sand-shs-temp-9341-windows-sample-app/deploy_pkg.zip'
+                // TODO - consider cleaning the C:\temp\ directory after artifacts are pushed to GCS successfully
             }
         }
     }
