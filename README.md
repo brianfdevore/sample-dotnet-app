@@ -15,3 +15,6 @@ JenkinsFile.build Dependencies for Jenkins Windows Agent:
 
 - Google Cloud SDK (including gcloud CLI) for sending artifacts to GCS bucket
 
+- Git (enables Jenkins to clone repo)
+  choco install git.install -y
+
