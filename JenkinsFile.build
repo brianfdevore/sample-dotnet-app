@@ -35,10 +35,12 @@ pipeline {
         }
         stage ('Image-Build') {
             //agent { label 'windows-slave' }
-            steps {
-                echo 'Starting Packer image build...'
+            steps {                
                 echo 'Validating Packer json template file...'
                 bat 'packer validate .\\packer\\app-image.json'
+                echo 'Packer image validated successfully.'
+                echo 'Starting Packer image build...'
+                bat 'packer build .\\packer\\app-image.json'
                 echo 'Packer image build completed successfully.'
             }
         }
