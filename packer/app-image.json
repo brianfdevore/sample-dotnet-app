@@ -1,7 +1,7 @@
 {
   "variables": {        
         "gcloud_project_id": "sab-dev-sand-shs-temp-9341",
-        "network": "vpc-dev",
+        "network": "sab-ssvcs-network-vpcs-5041/vpc-dev",
         "subnetwork": "sn-dev-uscentral1-01"
   },
   "builders": [
