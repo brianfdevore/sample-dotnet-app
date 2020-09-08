@@ -27,9 +27,7 @@ pipeline {
                 echo 'Publishing application package locally...'
                 bat 'dotnet publish -c Release -o C:\\temp\\publish'
                 echo 'Compressing application package locally...'
-                bat 'powershell.exe Compress-Archive C:\\temp\\publish\\ C:\\temp\\deploy_pkg.zip'
-                //echo 'Cleaning remote artifact repository...'
-                //bat 'gsutil -m rm gs://artifacts-sab-dev-sand-shs-temp-9341-windows-sample-app/**'  //removes all objects, leaves the bucket
+                bat 'powershell.exe Compress-Archive C:\\temp\\publish\\ C:\\temp\\deploy_pkg.zip'                
                 echo 'Deploying application package to GCS bucket...'                
                 bat 'gsutil cp C:\\temp\\deploy_pkg.zip gs://artifacts-sab-dev-sand-shs-temp-9341-windows-sample-app/deploy_pkg.zip'
                 echo 'Application package uploaded to artifact repo successfully.'                
