@@ -48,7 +48,7 @@ pipeline {
             steps {
                 echo 'Starting Terraform infrastructure deployment...'
                 // TODO
-                'Terraform infrastructure deployment completed successfully.'
+                echo 'Terraform infrastructure deployment completed successfully.'
             }
         }
     }
