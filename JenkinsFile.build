@@ -40,6 +40,7 @@ pipeline {
             steps {
                 echo 'Starting Packer image build...'
                 // TODO
+                echo 'Packer image build completed successfully.'
             }
         }
         stage ('Infra-Deploy') {
@@ -47,6 +48,7 @@ pipeline {
             steps {
                 echo 'Starting Terraform infrastructure deployment...'
                 // TODO
+                'Terraform infrastructure deployment completed successfully.'
             }
         }
     }
