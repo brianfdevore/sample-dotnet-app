@@ -37,7 +37,8 @@ pipeline {
             //agent { label 'windows-slave' }
             steps {
                 echo 'Starting Packer image build...'
-                // TODO
+                echo 'Validating Packer json template file...'
+                bat 'packer validate app-image.json'
                 echo 'Packer image build completed successfully.'
             }
         }

@@ -1,0 +1,72 @@
+{
+  "variables": {        
+        "gcloud_project_id": "sab-dev-sand-shs-temp-9341"
+  },
+  "builders": [
+    {
+      "type": "googlecompute",
+      "project_id": "{{user `gcloud_project_id`}}",
+      "disk_size": "50",
+      "source_image": "windows-server-2016-dc-v20200813",
+      "source_image_family": "windows-2016",
+      "zone": "us-central1-c",
+      "machine_type":"n1-standard-1",
+      "image_name": "bfd-test-shs-win2016--{{timestamp}}",
+      "communicator": "winrm",
+      "winrm_username": "packer_user",
+      "winrm_insecure": true,
+      "winrm_use_ssl": true,
+      "metadata": {
+        "windows-startup-script-cmd": "winrm quickconfig -quiet & net user /add packer_user & net localgroup administrators packer_user /add & winrm set winrm/config/service/auth @{Basic=\"true\"}"
+      },
+      "omit_external_ip": "true",
+      "use_internal_ip": "true",
+      "on_host_maintenance":"TERMINATE"
+    }
+  ],
+  "provisioners": [
+      {
+          "type": "powershell",
+          "inline": [
+            "dir c:\\"
+          ]
+      },
+      {
+            "type": "windows-shell",
+            "execute_command": "{{ .Vars }} cmd /c \"{{ .Path }}\"",
+            "scripts": [
+              "../installers/install_choco.bat"
+      ]
+      },
+      {
+        "type": "windows-shell",
+        "inline": ["choco install IIS-WebServer --source windowsfeatures -y"]
+      },
+      {
+        "type": "windows-shell",
+        "inline": ["choco install dotnetcore-windowshosting -y"]
+      },
+      {
+        "type": "windows-shell",
+        "inline": ["choco install dotnetcore-sdk -y"]
+      },
+      {
+              "type": "windows-shell",
+              "inline": ["choco install puppet-agent -y"]
+      },
+        {
+               "type": "windows-shell",
+               "inline": ["puppet module install puppetlabs-iis"]
+      },
+        {
+       "type": "puppet-masterless",
+       "manifest_file": "./provisioners/puppet/site.pp",
+       "guest_os_type": "windows"
+      },
+      {
+        "type":"file",
+        "source": "C:\\temp\\publish\\",
+        "destination": "C:\\inetpub\\mvc-app\\"
+      }
+  ]
+}

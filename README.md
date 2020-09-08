@@ -18,3 +18,9 @@ JenkinsFile.build Dependencies for Jenkins Windows Agent:
 - Git (enables Jenkins to clone repo)
   choco install git.install -y
 
+- Packer
+  choco install packer -y
+
+- Terraform
+  choco install terraform -y
+
