@@ -4,28 +4,49 @@ pipeline {
     //    ansiColor('xterm')
     //}
     stages {
-        stage ('Build') {
+        stage ('App-Build') {
             //agent { label 'windows-slave' }
             steps {
                 echo 'Building application package...'
                 bat 'dotnet clean'
-                bat 'dotnet build'
+                bat 'dotnet build'                
             }
         }
-        stage ('Test') {
+        stage ('App-Test') {
             //agent { label 'windows-slave' }
             steps {
-                echo 'Testing...'
+                echo 'Performing application unit tests...'
+                // TODO                
             }
         }
-        stage ('Deploy') {
+        stage ('App-Deploy') {
             //agent { label 'windows-slave' }
             steps {
-                echo 'Deploying application package to GCS bucket...'
+                echo 'Cleaning local publish directory...'
+                bat 'powershell.exe if(Test-Path C:\\temp) {Remove-Item -path C:\\temp\\* -recurse -force}'
+                echo 'Publishing application package locally...'
                 bat 'dotnet publish -c Release -o C:\\temp\\publish'
+                echo 'Compressing application package locally...'
                 bat 'powershell.exe Compress-Archive C:\\temp\\publish\\ C:\\temp\\deploy_pkg.zip'
+                echo 'CLenaing remote artifact repository...'
+                bat 'gsutil -m rm gs://artifacts-sab-dev-sand-shs-temp-9341-windows-sample-app/**'  //removes all objects, leaves the bucket
+                echo 'Deploying application package to GCS bucket...'                
                 bat 'gsutil cp C:\\temp\\deploy_pkg.zip gs://artifacts-sab-dev-sand-shs-temp-9341-windows-sample-app/deploy_pkg.zip'
-                // TODO - consider cleaning the C:\temp\ directory after artifacts are pushed to GCS successfully
+                echo 'Application package uploaded to artifact repo successfully.'                
+            }
+        }
+        stage ('Image-Build') {
+            //agent { label 'windows-slave' }
+            steps {
+                echo 'Starting Packer image build...'
+                // TODO
+            }
+        }
+        stage ('Infra-Deploy') {
+            //agent { label 'windows-slave' }
+            steps {
+                echo 'Starting Terraform infrastructure deployment...'
+                // TODO
             }
         }
     }
