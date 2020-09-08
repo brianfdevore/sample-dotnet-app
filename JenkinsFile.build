@@ -38,7 +38,7 @@ pipeline {
             steps {
                 echo 'Starting Packer image build...'
                 echo 'Validating Packer json template file...'
-                bat 'packer validate app-image.json'
+                bat 'packer validate .\\packer\\app-image.json'
                 echo 'Packer image build completed successfully.'
             }
         }
