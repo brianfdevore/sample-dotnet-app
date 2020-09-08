@@ -35,7 +35,7 @@
             "type": "windows-shell",
             "execute_command": "{{ .Vars }} cmd /c \"{{ .Path }}\"",
             "scripts": [
-              "..\\installers\\install_choco.bat"
+              ".\\installers\\install_choco.bat"
       ]
       },
       {
