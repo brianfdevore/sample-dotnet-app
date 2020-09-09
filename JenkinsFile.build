@@ -40,7 +40,7 @@ pipeline {
                 bat 'packer validate .\\packer\\app-image.json'
                 echo 'Packer image validated successfully.'
                 echo 'Starting Packer image build...'
-                bat 'packer build .\\packer\\app-image.json'
+                bat 'PACKER_LOG=1 packer build .\\packer\\app-image.json'
                 echo 'Packer image build completed successfully.'
             }
         }
