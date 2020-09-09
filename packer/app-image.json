@@ -1,25 +1,31 @@
 {
   "variables": {        
-        "gcloud_project_id": "sab-dev-sand-shs-temp-9341",
-        "shared_vpc_project": "sab-ssvcs-network-vpcs-5041",
-        "subnetwork": "sn-dev-uscentral1-01"
+        "gcloud_project_id": "sab-dev-sand-shs-temp-9341"
   },
   "builders": [
     {
       "type": "googlecompute",
       "project_id": "{{user `gcloud_project_id`}}",
-      "network_project_id": "{{ user `shared_vpc_project` }}",
-      "subnetwork": "{{ user `subnetwork` }}",
+      "network": "vpc-dev",
+      "subnetwork": "sn-dev-uscentral1-01",
+      "network_project_id": "sab-ssvcs-network-vpcs-5041",
       "disk_size": "50",
-      "source_image": "shs-win2016--1598368419",
-      "source_image_family": "shs-win2016",
-      "zone": "us-central1-c",
+      "source_image": "sabre-winops-win2016-20200825",
+      "source_image_family": "sabre-winops-win2016-images",
+      "zone": "us-central1-a",
       "machine_type":"n1-standard-1",
-      "image_name": "bfd-test-shs-win2016--{{timestamp}}",
+      "tags": [
+        "default-uscentral1", "rdp", "ssh", "https", "winrm"
+      ],
+      "image_name": "bfd-shs-win2016--{{isotime | clean_resource_name}}",
+      "image_family": "shs-win2016",
       "communicator": "winrm",
       "winrm_username": "packer_user",
+      "winrm_port": 5986,
       "winrm_insecure": true,
+      "winrm_timeout": "10m",
       "winrm_use_ssl": true,
+      "winrm_no_proxy": true,
       "metadata": {
         "windows-startup-script-cmd": "winrm quickconfig -quiet & net user /add packer_user & net localgroup administrators packer_user /add & winrm set winrm/config/service/auth @{Basic=\"true\"}"
       },
@@ -36,31 +42,23 @@
           ]
       },
       {
-            "type": "windows-shell",
-            "execute_command": "{{ .Vars }} cmd /c \"{{ .Path }}\"",
-            "scripts": [
-              ".\\installers\\install_choco.bat"
-      ]
-      },
+        "type": "powershell",
+        "scripts": [
+          ".\\packer\\provisioners\\powershell\\Set-InternetProxy.ps1",
+          ".\\packer\\provisioners\\powershell\\Install_Chocolatey.ps1"
+        ],
+        "execution_policy": "bypass"
+    },
       {
         "type": "windows-shell",
-        "inline": ["choco install IIS-WebServer --source windowsfeatures -y"]
-      },
-      {
-        "type": "windows-shell",
-        "inline": ["choco install dotnetcore-windowshosting -y"]
-      },
-      {
-        "type": "windows-shell",
-        "inline": ["choco install dotnetcore-sdk -y"]
-      },
-      {
-              "type": "windows-shell",
-              "inline": ["choco install puppet-agent -y"]
-      },
-        {
-               "type": "windows-shell",
-               "inline": ["puppet module install puppetlabs-iis"]
+        "inline": [
+          "choco config set proxy http://teo51ilisdprx01.proxy-forwarding-rule.il4.us-central1.lb.sab-dev-proxy-3608.internal:3128",
+          "choco install IIS-WebServer --source windowsfeatures -y",
+          "choco install dotnetcore-windowshosting -y",
+          "choco install dotnetcore-sdk -y",
+          "choco install puppet-agent -y",
+          "puppet module install puppetlabs-iis"
+        ]
       },
         {
        "type": "puppet-masterless",
