@@ -11,6 +11,7 @@
       "network_project_id": "sab-ssvcs-network-vpcs-5041",
       "disk_size": "50",
       "source_image": "sabre-winops-win2016-20200825",
+      "source_image_project_id": "sab-ssvcs-gold-images-c3d9",  
       "source_image_family": "sabre-winops-win2016-images",
       "zone": "us-central1-a",
       "machine_type":"n1-standard-1",
