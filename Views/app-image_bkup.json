@@ -56,13 +56,20 @@
           "choco config set proxy http://teo51ilisdprx01.proxy-forwarding-rule.il4.us-central1.lb.sab-dev-proxy-3608.internal:3128",
           "choco install IIS-WebServer --source windowsfeatures -y",
           "choco install dotnetcore-windowshosting -y",
-          "choco install dotnetcore-sdk -y"
+          "choco install dotnetcore-sdk -y",
+          "choco install puppet-agent -y",
+          "puppet module install puppetlabs-iis"
         ]
+      },
+        {
+       "type": "puppet-masterless",
+       "manifest_file": ".\\packer\\provisioners\\puppet\\site.pp",
+       "guest_os_type": "windows"
       },
       {
         "type":"file",
         "source": "C:\\temp\\publish\\",
-        "destination": "C:\\inetpub\\wwwroot\\"
+        "destination": "C:\\inetpub\\mvc-app\\"
       }
   ]
 }
