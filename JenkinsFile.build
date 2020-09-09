@@ -3,6 +3,9 @@ pipeline {
     //options {
     //    ansiColor('xterm')
     //}
+    environment {
+        PACKER_LOG = "1"
+    }
     stages {
         stage ('App-Build') {
             //agent { label 'windows-slave' }
