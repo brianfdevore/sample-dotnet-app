@@ -4,10 +4,10 @@ provider "google" {
   zone    = var.zone
 }
 
-data "google_compute_image" "source_image" {
-  family = "bfd-win2016"  #returns the latest image from family which isn't deprecated
-  project = var.project_id
-}
+# data "google_compute_image" "source_image" {
+#   family = "bfd-win2016"  #returns the latest image from family which isn't deprecated
+#   project = var.project_id
+# }
 
 resource "google_compute_instance" "vm_instance" {
   name                      = var.hostname
