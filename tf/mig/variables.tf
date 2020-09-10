@@ -1,25 +1,25 @@
 # Creds and default location
-variable "credentials" { default = "../sab-shs-synxis-sbx-01-7205-4ceb4d1fd087.json" } // Change with you service account .json file
+#variable "credentials" { default = "../sab-shs-synxis-sbx-01-7205-4ceb4d1fd087.json" } // Change with your service account .json file
 variable "project"     { default = "sab-dev-sand-shs-temp-9341" } // Your GCP Project ID
 variable "region"      { default = "us-central1" }
-variable "zone"        { default = "us-central1-c" }
+variable "zone"        { default = "us-central1-a" }
 #
 # Instance Template
-variable "prefix"       { default = "apm-" }
-variable "desc"         { default = "This template is used to create apm server instances." }
+variable "prefix"       { default = "sda-" }
+variable "desc"         { default = "This template is used to create sample dotnet app server instances." }
 variable "tags"         { default = "webserver" }
-variable "desc_inst"    { default = "APM Web server instance" }
+variable "desc_inst"    { default = "SDA Web server instance" }
 variable "machine_type" { default =  "n1-standard-1" }
-variable "source_image" { default =  "sab-ssvcs-gold-images-c3d9/sabre-winops-win2016-20200805" } //shs-win2016--1591664666shs-win2016--1591576917 ubuntu-1804-ltsThis is the family tag used when building the Golden Image with Packer.
+variable "source_image" { default =  "sab-dev-sand-shs-temp-9341/bfd-shs-win2016--2020-09-09t18-52-36z" } //shs-win2016--1591664666shs-win2016--1591576917 ubuntu-1804-ltsThis is the family tag used when building the Golden Image with Packer.
 variable "network"      { default =  "default" }
 #
 # Managed Instace Group
-variable "rmig_name"          { default =  "apm-rmig" }
-variable "base_instance_name" { default =  "apm" }
+variable "rmig_name"          { default =  "sda-rmig" }
+variable "base_instance_name" { default =  "sda" }
 variable "target_size"        { default =  "3" }
 #
 # Healthcheck
-variable "hc_name" { default = "apm-healthcheck" }
+variable "hc_name" { default = "sda-healthcheck" }
 variable "hc_port" { default = "80" }
 #
 # Backend

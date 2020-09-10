@@ -19,7 +19,7 @@
         "default-uscentral1", "rdp", "ssh", "https", "winrm"
       ],
       "image_name": "bfd-shs-win2016--{{isotime | clean_resource_name}}",
-      "image_family": "shs-win2016",
+      "image_family": "bfd-win2016",
       "communicator": "winrm",
       "winrm_username": "packer_user",
       "winrm_port": 5986,
@@ -62,7 +62,7 @@
       {
         "type":"file",
         "source": "C:\\temp\\publish\\",
-        "destination": "C:\\inetpub\\wwwroot\\"
+        "destination": "C:\\inetpub\\wwwroot"
       }
   ]
 }

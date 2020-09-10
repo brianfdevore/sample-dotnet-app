@@ -1,7 +1,7 @@
 terraform {
- backend "gcs" {
-   //gsutil mb gs://shs-synxis-apm-tf-admin
-   bucket  = "shs-synxis-apm-tf-admin"
-   prefix  = "terraform/state"
- }
+  backend "gcs" {
+    //gsutil mb gs://sab-dev-sand-shs-temp-9341-windows-sample-app-tf-admin
+    bucket = "sab-dev-sand-shs-temp-9341-windows-sample-app-tf-admin"
+    prefix = "terraform-state/dev"
+  }
 }

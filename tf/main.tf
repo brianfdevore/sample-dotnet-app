@@ -2,11 +2,9 @@ provider "google" {
   project = var.project_id
   region  = var.region
   zone    = var.zone
-  //credentials = "sab-shs-synxis-sbx-01-7205-4ceb4d1fd087.json"
+  //credentials = "sab-dev-sand-shs-temp-9431-xxx.json" //<-- use in prod with a SA, or alternatively, you can run 'gcloud auth application-default login' for local dev
 }
 module "win2016" {
-    source = "./win"
+  source = "./win"
 }
-module "jenkins" {
-    source = "./jenkins"
-}
+

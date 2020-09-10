@@ -51,7 +51,9 @@ pipeline {
             //agent { label 'windows-slave' }
             steps {
                 echo 'Starting Terraform infrastructure deployment...'
-                // TODO
+                bat 'cd tf'
+                bat 'terraform init'
+                bat 'terraform apply -auto-approve'
                 echo 'Terraform infrastructure deployment completed successfully.'
             }
         }
