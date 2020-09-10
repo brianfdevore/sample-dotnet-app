@@ -31,8 +31,8 @@ variable "service_account" {
   type        = string
   default     = "388291779166-compute@developer.gserviceaccount.com"
 }
-# variable "source_image" {
-#   description = "boot image for this instance"
-#   type        = string
-#   default     = "bfd-shs-win2016--2020-09-09t18-52-36z"
-# }
+variable "source_image" {
+  description = "boot image for this instance"
+  type        = string
+  default     = "bfd-shs-win2016--2020-09-10t15-57-35z"
+}

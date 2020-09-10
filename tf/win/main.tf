@@ -20,8 +20,8 @@ resource "google_compute_instance" "vm_instance" {
       #image = "debian-cloud/debian-9"
       #image = "sab-ssvcs-gold-images-c3d9/sabre-rhel-7-oslogin-rc-202008150800"
       #image = "sab-ssvcs-gold-images-c3d9/sabre-winops-win2016-20200805"
-      #image = var.source_image
-      image = data.google_compute_image.source_image.self_link
+      image = var.source_image
+      #image = data.google_compute_image.source_image.self_link
     }
   }
 
