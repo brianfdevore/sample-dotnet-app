@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent none
     //options {
     //    ansiColor('xterm')
     //}
@@ -8,7 +8,7 @@ pipeline {
     }
     stages {
         stage ('App-Build') {
-            //agent { label 'windows-slave' }
+            agent { label 'windows-slave' }
             steps {
                 echo 'Building application package...'
                 bat 'dotnet clean'
@@ -16,14 +16,14 @@ pipeline {
             }
         }
         stage ('App-Test') {
-            //agent { label 'windows-slave' }
+            agent { label 'windows-slave' }
             steps {
                 echo 'Performing application unit tests...'
                 // TODO                
             }
         }
         stage ('App-Deploy') {
-            //agent { label 'windows-slave' }
+            agent { label 'windows-slave' }
             steps {
                 echo 'Cleaning local publish directory...'
                 bat 'powershell.exe if(Test-Path C:\\temp) {Remove-Item -path C:\\temp\\* -recurse -force}'
@@ -37,7 +37,7 @@ pipeline {
             }
         }
         stage ('Image-Build') {
-            //agent { label 'windows-slave' }
+            agent { label 'windows-slave' }
             steps {                
                 echo 'Validating Packer json template file...'
                 bat 'packer validate .\\packer\\app-image.json'
@@ -48,14 +48,17 @@ pipeline {
             }
         }
         stage ('Infra-Deploy') {
-            //agent { label 'windows-slave' }
+            agent { label 'master' }
             steps {
                 echo 'Starting Terraform infrastructure deployment...'
-                bat """
-                    cd tf
-                    terraform init
-                    terraform apply -auto-approve
-                """.stripIndent().trim()     
+                //bat """
+                //    cd tf
+                //    terraform init
+                //    terraform apply -auto-approve
+                //""".stripIndent().trim()     
+                sh 'cd tf'
+                sh 'terraform init'
+                sh 'terraform apply -auto-approve'
                 echo 'Terraform infrastructure deployment completed successfully.'
             }
         }
