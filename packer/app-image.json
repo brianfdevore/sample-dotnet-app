@@ -24,7 +24,7 @@
       "winrm_username": "packer_user",
       "winrm_port": 5986,
       "winrm_insecure": true,
-      "winrm_timeout": "10m",
+      "winrm_timeout": "15m",
       "winrm_use_ssl": true,
       "winrm_no_proxy": true,
       "metadata": {
