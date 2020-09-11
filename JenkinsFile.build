@@ -4,7 +4,7 @@ pipeline {
     //    ansiColor('xterm')
     //}
     environment {
-        PACKER_LOG = "1"
+        PACKER_LOG = '1'
     }
     stages {
         stage ('App-Build') {
@@ -12,14 +12,14 @@ pipeline {
             steps {
                 echo 'Building application package...'
                 bat 'dotnet clean'
-                bat 'dotnet build'                
+                bat 'dotnet build'
             }
         }
         stage ('App-Test') {
             //agent { label 'windows-slave' }
             steps {
                 echo 'Performing application unit tests...'
-                // TODO                
+                // TODO
             }
         }
         stage ('App-Deploy') {
@@ -30,20 +30,20 @@ pipeline {
                 echo 'Publishing application package locally...'
                 bat 'dotnet publish -c Release -o C:\\temp\\publish'
                 echo 'Compressing application package locally...'
-                bat 'powershell.exe Compress-Archive C:\\temp\\publish\\ C:\\temp\\deploy_pkg.zip'                
-                echo 'Deploying application package to GCS bucket...'                
+                bat 'powershell.exe Compress-Archive C:\\temp\\publish\\ C:\\temp\\deploy_pkg.zip'
+                echo 'Deploying application package to GCS bucket...'
                 bat 'gsutil cp C:\\temp\\deploy_pkg.zip gs://artifacts-sab-dev-sand-shs-temp-9341-windows-sample-app/deploy_pkg.zip'
-                echo 'Application package uploaded to artifact repo successfully.'                
+                echo 'Application package uploaded to artifact repo successfully.'
             }
         }
         stage ('Image-Build') {
             //agent { label 'windows-slave' }
-            steps {                
+            steps {
                 echo 'Validating Packer json template file...'
                 bat 'packer validate .\\packer\\app-image.json'
                 echo 'Packer image validated successfully.'
                 echo 'Starting Packer image build...'
-                //bat 'packer build .\\packer\\app-image.json'
+                bat 'packer build .\\packer\\app-image.json'
                 echo 'Packer image build completed successfully.'
             }
         }
@@ -51,11 +51,11 @@ pipeline {
             //agent { label 'master' }
             steps {
                 echo 'Starting Terraform infrastructure deployment...'
-                bat """
+                bat '''
                     cd tf
                     terraform init
                     terraform apply -auto-approve
-                """.stripIndent().trim()     
+                '''.stripIndent().trim()
                 //sh 'cd tf'
                 //sh 'terraform init'
                 //sh 'terraform apply -auto-approve'

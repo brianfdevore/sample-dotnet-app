@@ -61,7 +61,7 @@
       },
       {
         "type":"file",
-        "source": "C:\\temp\\publish\\",
+        "source": "C:\\temp\\publish\\/",
         "destination": "C:\\inetpub\\wwwroot"
       }
   ]
