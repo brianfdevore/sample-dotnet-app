@@ -9,6 +9,7 @@ pipeline {
                 label 'windows'
                 }
             steps {
+                echo "Checking out SCM on Windows Agent in ${LOG_ENV}"
                 checkout scm
                 echo 'Building application package...'
                 bat 'dotnet clean'
@@ -20,8 +21,7 @@ pipeline {
                 label 'master'
                 }
             steps {
-                echo "Performing application unit tests on MASTER in ${LOG_ENV}..."
-                // TODO
+                echo "Running app testing from Linux Master in ${LOG_ENV}"
             }
         }
         stage ('App-Deploy') {
@@ -29,16 +29,7 @@ pipeline {
                 label 'windows'
                 }
             steps {
-                echo 'Cleaning local publish directory...'
-                bat 'powershell.exe if(Test-Path C:\\temp) {Remove-Item -path C:\\temp\\* -recurse -force}'
-                echo 'Publishing application package locally...'
-                bat 'dotnet publish -c Release -o C:\\temp\\publish'
-                echo 'Compressing application package locally...'
-                bat 'powershell.exe Compress-Archive C:\\temp\\publish\\ C:\\temp\\deploy_pkg.zip'
-                echo 'Deploying application package to GCS bucket...'
-                bat 'gsutil cp C:\\temp\\deploy_pkg.zip gs://artifacts-sab-dev-sand-shs-temp-9341-windows-sample-app/deploy_pkg.zip'
-                echo 'Application package uploaded to artifact repo successfully.'
-            }
+                echo "Running app deploy from Windows Agent in ${LOG_ENV}"
         }
     }
 }
