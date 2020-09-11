@@ -30,6 +30,7 @@ pipeline {
                 }
             steps {
                 echo "Running app deploy from Windows Agent in ${LOG_ENV}"
+            }
         }
     }
 }
