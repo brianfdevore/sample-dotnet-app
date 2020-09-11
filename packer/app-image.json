@@ -22,7 +22,7 @@
       "image_family": "bfd-win2016",
       "communicator": "winrm",
       "winrm_username": "packer_user",
-      "winrm_port": 5986,
+      "winrm_port": 5985,
       "winrm_insecure": true,
       "winrm_timeout": "15m",
       "winrm_use_ssl": true,
