@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage ('App-Build') {
             agent {
-                label 'windows-slave'
+                label 'windows'
                 }
             steps {
                 checkout scm
@@ -26,7 +26,7 @@ pipeline {
         }
         stage ('App-Deploy') {
             agent {
-                label 'windows-slave'
+                label 'windows'
                 }
             steps {
                 echo 'Cleaning local publish directory...'
