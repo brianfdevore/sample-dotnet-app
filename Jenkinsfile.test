@@ -8,9 +8,7 @@ pipeline {
             agent {
                 label 'windows'
                 }
-            steps {
-                echo "Checking out SCM on Windows Agent in ${LOG_ENV}"
-                checkout scm
+            steps {                
                 echo 'Building application package...'
                 bat 'dotnet clean'
                 bat 'dotnet build'
