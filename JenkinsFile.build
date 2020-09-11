@@ -8,7 +8,7 @@ pipeline {
     }
     stages {
         stage ('App-Build') {
-            //agent { label 'windows-slave' }
+            //agent { label 'windows' }
             steps {
                 echo 'Building application package...'
                 bat 'dotnet clean'
@@ -16,14 +16,14 @@ pipeline {
             }
         }
         stage ('App-Test') {
-            //agent { label 'windows-slave' }
+            //agent { label 'windows' }
             steps {
                 echo 'Performing application unit tests...'
                 // TODO
             }
         }
         stage ('App-Deploy') {
-            //agent { label 'windows-slave' }
+            //agent { label 'windows' }
             steps {
                 echo 'Cleaning local publish directory...'
                 bat 'powershell.exe if(Test-Path C:\\temp) {Remove-Item -path C:\\temp\\* -recurse -force}'
@@ -37,7 +37,7 @@ pipeline {
             }
         }
         stage ('Image-Build') {
-            //agent { label 'windows-slave' }
+            //agent { label 'windows' }
             steps {
                 echo 'Validating Packer json template file...'
                 bat 'packer validate .\\packer\\app-image.json'
