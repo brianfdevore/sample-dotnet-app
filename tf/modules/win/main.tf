@@ -1,9 +1,10 @@
 provider "google" {
   version = "~> 3.34"
+  project = var.project_id
 }
 
 data "google_compute_image" "source_image" {
-  source_image_family = var.source_image_family  #returns the latest image from family which isn't deprecated
+  family = var.source_image_family  #returns the latest image from family which isn't deprecated
   project = var.project_id
 }
 
@@ -12,6 +13,7 @@ resource "google_compute_instance" "vm_instance" {
   machine_type              = var.machine_type
   tags                      = var.tags
   allow_stopping_for_update = true
+  zone                      = var.zone
 
   boot_disk {
     initialize_params {
@@ -36,4 +38,7 @@ resource "google_compute_instance" "vm_instance" {
     email  = var.svc_acct
     scopes = var.svc_acct_scopes
   }
+
+    metadata_startup_script = "echo Environment is: ${var.env} > C:\test.txt"
+
 }

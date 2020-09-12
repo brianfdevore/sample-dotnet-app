@@ -1,5 +1,6 @@
 provider "google" {
   version = "~> 3.34"
+  project = var.project_id
 }
 #
 # Backend Services
