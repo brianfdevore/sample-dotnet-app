@@ -1,18 +1,16 @@
 provider "google" {
-  project = var.project_id
-  region  = var.region
-  zone    = var.zone
+  version = "~> 3.34"
 }
 
 data "google_compute_image" "source_image" {
-  family = "bfd-win2016"  #returns the latest image from family which isn't deprecated
+  source_image_family = var.source_image_family  #returns the latest image from family which isn't deprecated
   project = var.project_id
 }
 
 resource "google_compute_instance" "vm_instance" {
   name                      = var.hostname
-  machine_type              = "e2-standard-2"
-  tags                      = ["ssh", "http", "rdp", "default-uscentral1"]
+  machine_type              = var.machine_type
+  tags                      = var.tags
   allow_stopping_for_update = true
 
   boot_disk {
@@ -26,15 +24,16 @@ resource "google_compute_instance" "vm_instance" {
   }
 
   network_interface {
-    subnetwork = "projects/sab-ssvcs-network-vpcs-5041/regions/us-central1/subnetworks/sn-dev-uscentral1-01"
+    subnetwork = var.network_interface
   }
   
   metadata = {
     enable-oslogin = "True"
+    app-environment = var.env
   }
   
   service_account {
-    email  = "388291779166-compute@developer.gserviceaccount.com"
-    scopes = ["cloud-platform"]
+    email  = var.svc_acct
+    scopes = var.svc_acct_scopes
   }
 }
