@@ -24,10 +24,13 @@ pipeline {
         }
         stage ('App-Deploy') {
             agent {
-                label 'windows'
+                label 'master'
                 }
             steps {
-                echo "Running app deploy from Windows Agent in ${LOG_ENV}"
+                echo "Running app deploy from Linux Agent in ${LOG_ENV}"
+                sh 'cd tf/dev'
+                sh 'terraform init'
+                sh 'terraform apply -auto-approve'
             }
         }
     }
