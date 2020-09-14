@@ -32,7 +32,7 @@ pipeline {
                 echo 'Compressing application package locally...'
                 bat 'powershell.exe Compress-Archive C:\\temp\\publish\\ C:\\temp\\deploy_pkg.zip'
                 // echo 'Deploying application package to GCS bucket...'
-                // bat 'gsutil cp C:\\temp\\deploy_pkg.zip gs://artifacts-sab-dev-sand-shs-temp-9341-windows-sample-app/deploy_pkg.zip'
+                // bat 'gsutil cp C:\\temp\\deploy_pkg.zip gs://artifacts-sab-dev-sand-shs-temp-9341-windows-sample-app/deploy_pkg.zip'  //<-- not working on jenkins-win
                 // echo 'Application package uploaded to artifact repo successfully.'
             }
         }
@@ -43,7 +43,7 @@ pipeline {
                 bat 'packer validate .\\packer\\app-image.json'
                 echo 'Packer image validated successfully.'
                 echo 'Starting Packer image build...'
-                //bat 'packer build .\\packer\\app-image.json'
+                bat 'packer build .\\packer\\app-image.json'
                 echo 'Packer image build completed successfully.'
             }
         }
