@@ -43,20 +43,20 @@ pipeline {
                 bat 'packer validate .\\packer\\app-image.json'
                 echo 'Packer image validated successfully.'
                 echo 'Starting Packer image build...'
-                bat 'packer build .\\packer\\app-image.json'
+                //bat 'packer build .\\packer\\app-image.json'
                 echo 'Packer image build completed successfully.'
             }
         }
         stage ('Infra-Deploy') {
-            agent { label 'master' }
+            agent { label 'windows' }
             steps {
                 echo 'Starting Terraform infrastructure deployment...'
-                // bat '''
-                //     cd tf/dev
-                //     terraform init
-                //     terraform apply -auto-approve
-                // '''.stripIndent().trim()
-                sh 'cd tf/dev && pwd && ls -la && terraform init && terraform apply -auto-approve'
+                bat '''
+                    cd tf/dev
+                    terraform init  // <-- current jenkins-win host can't download providers, so job fails here
+                    terraform apply -auto-approve
+                '''.stripIndent().trim()
+                //sh 'cd tf/dev && pwd && ls -la && terraform init && terraform apply -auto-approve'
                 echo 'Terraform infrastructure deployment completed successfully.'
             }
         }
