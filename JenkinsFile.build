@@ -53,7 +53,7 @@ pipeline {
                 echo 'Starting Terraform infrastructure deployment...'
                 bat '''
                     cd tf/dev
-                    terraform init  // <-- current jenkins-win host can't download providers, so job fails here
+                    terraform init
                     terraform apply -auto-approve
                 '''.stripIndent().trim()
                 //sh 'cd tf/dev && pwd && ls -la && terraform init && terraform apply -auto-approve'
