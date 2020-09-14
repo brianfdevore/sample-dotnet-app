@@ -31,8 +31,8 @@ pipeline {
                 sh 'whoami'
                 sh 'cd tf/dev'
                 sh 'ls -la'
-                sh 'sudo terraform init'
-                sh 'sudo terraform apply -auto-approve'
+                sh 'terraform init'
+                sh 'terraform apply -auto-approve'
             }
         }
     }
