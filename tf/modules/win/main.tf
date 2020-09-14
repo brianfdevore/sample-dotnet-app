@@ -9,6 +9,12 @@ data "google_compute_image" "source_image" {
   project = var.project_id
 }
 
+data "template_file" "set_os_env_variables" {
+  template = file("${path.module}/set_env.tpl")
+  vars = {
+    curr_environment   = var.env
+  }
+
 resource "google_compute_instance" "vm_instance" {
   name                      = var.hostname
   machine_type              = var.machine_type
@@ -33,6 +39,7 @@ resource "google_compute_instance" "vm_instance" {
   metadata = {
     enable-oslogin = "True"
     app-environment = var.env
+    #windows-startup-script-ps1 = TODO - https://cloud.google.com/compute/docs/startupscript
   }
   
   service_account {
