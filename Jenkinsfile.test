@@ -6,12 +6,12 @@ pipeline {
     stages {
         stage ('App-Build') {
             agent {
-                label 'windows'
+                label 'master'
                 }
             steps {                
                 echo 'Building application package...'
-                bat 'dotnet clean'
-                bat 'dotnet build'
+                //bat 'dotnet clean'
+                //bat 'dotnet build'
             }
         }
         stage ('App-Test') {
