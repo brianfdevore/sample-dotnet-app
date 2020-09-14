@@ -30,6 +30,7 @@ pipeline {
                 echo "Running app deploy from Linux Agent in ${LOG_ENV}"
                 sh 'whoami'
                 sh 'cd tf/dev'
+                sh 'pwd'
                 sh 'ls -la'
                 sh 'terraform init'
                 sh 'terraform apply -auto-approve'
