@@ -6,12 +6,12 @@ pipeline {
     stages {
         stage ('App-Build') {
             agent {
-                label 'windows'
+                label 'master'
                 }
             steps {                
                 echo 'Building application package...'
-                bat 'dotnet clean'
-                bat 'dotnet build'
+                //bat 'dotnet clean'
+                //bat 'dotnet build'
             }
         }
         stage ('App-Test') {
@@ -24,10 +24,11 @@ pipeline {
         }
         stage ('App-Deploy') {
             agent {
-                label 'windows'
+                label 'master'
                 }
             steps {
-                echo "Running app deploy from Windows Agent in ${LOG_ENV}"
+                echo "Running app deploy from Linux Agent in ${LOG_ENV}"
+                sh 'cd tf/dev && pwd && ls -la && terraform init && terraform apply -auto-approve'
             }
         }
     }

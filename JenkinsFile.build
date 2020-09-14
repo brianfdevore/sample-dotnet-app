@@ -1,14 +1,11 @@
 pipeline {
-    agent any
-    //options {
-    //    ansiColor('xterm')
-    //}
+    agent none
     environment {
         PACKER_LOG = '1'
     }
     stages {
         stage ('App-Build') {
-            //agent { label 'windows' }
+            agent { label 'windows' }
             steps {
                 echo 'Building application package...'
                 bat 'dotnet clean'
@@ -16,14 +13,14 @@ pipeline {
             }
         }
         stage ('App-Test') {
-            //agent { label 'windows' }
+            agent { label 'windows' }
             steps {
                 echo 'Performing application unit tests...'
                 // TODO
             }
         }
         stage ('App-Deploy') {
-            //agent { label 'windows' }
+            agent { label 'windows' }
             steps {
                 echo 'Cleaning local publish directory...'
                 bat 'powershell.exe if(Test-Path C:\\temp) {Remove-Item -path C:\\temp\\* -recurse -force}'
@@ -31,13 +28,13 @@ pipeline {
                 bat 'dotnet publish -c Release -o C:\\temp\\publish'
                 echo 'Compressing application package locally...'
                 bat 'powershell.exe Compress-Archive C:\\temp\\publish\\ C:\\temp\\deploy_pkg.zip'
-                echo 'Deploying application package to GCS bucket...'
-                bat 'gsutil cp C:\\temp\\deploy_pkg.zip gs://artifacts-sab-dev-sand-shs-temp-9341-windows-sample-app/deploy_pkg.zip'
-                echo 'Application package uploaded to artifact repo successfully.'
+                // echo 'Deploying application package to GCS bucket...'
+                // bat 'gsutil cp C:\\temp\\deploy_pkg.zip gs://artifacts-sab-dev-sand-shs-temp-9341-windows-sample-app/deploy_pkg.zip'  //<-- not working on jenkins-win
+                // echo 'Application package uploaded to artifact repo successfully.'
             }
         }
         stage ('Image-Build') {
-            //agent { label 'windows' }
+            agent { label 'windows' }
             steps {
                 echo 'Validating Packer json template file...'
                 bat 'packer validate .\\packer\\app-image.json'
@@ -48,17 +45,15 @@ pipeline {
             }
         }
         stage ('Infra-Deploy') {
-            //agent { label 'master' }
+            agent { label 'master' }
             steps {
                 echo 'Starting Terraform infrastructure deployment...'
-                bat '''
-                    cd tf
-                    terraform init
-                    terraform apply -auto-approve
-                '''.stripIndent().trim()
-                //sh 'cd tf'
-                //sh 'terraform init'
-                //sh 'terraform apply -auto-approve'
+                // bat '''
+                //     cd tf/dev
+                //     terraform init
+                //     terraform apply -auto-approve
+                // '''.stripIndent().trim()
+                sh 'cd tf/dev && pwd && ls -la && terraform init && terraform apply -auto-approve'
                 echo 'Terraform infrastructure deployment completed successfully.'
             }
         }

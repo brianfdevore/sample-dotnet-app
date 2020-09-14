@@ -1,9 +1,6 @@
-#
-# Credentials
 provider "google" {
-  #credentials = var.credentials
-  project = var.project
-  region  = var.region
+  version = "~> 3.34"
+  project = var.project_id
 }
 #
 # Backend Services
@@ -60,7 +57,7 @@ resource "google_compute_region_instance_group_manager" "rmig" {
 resource "google_compute_instance_template" "cit" {
   name_prefix = var.prefix
   description = var.desc
-  project = var.project
+  project = var.project_id
   region  = var.region
   tags = [var.tags]
   instance_description = var.desc_inst
@@ -85,7 +82,7 @@ resource "google_compute_instance_template" "cit" {
 
   network_interface {
     #network = var.network
-    subnetwork = "projects/sab-ssvcs-network-vpcs-5041/regions/us-central1/subnetworks/sn-dev-uscentral1-01"
+    subnetwork = var.network_interface
 
     #
     # Give a Public IP to instance(s)
