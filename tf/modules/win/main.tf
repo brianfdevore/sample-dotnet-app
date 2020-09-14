@@ -1,3 +1,4 @@
+
 provider "google" {
   version = "~> 3.34"
   project = var.project_id
@@ -39,6 +40,6 @@ resource "google_compute_instance" "vm_instance" {
     scopes = var.svc_acct_scopes
   }
 
-    metadata_startup_script = "echo Environment is: ${var.env} > C:\test.txt"
+    metadata_startup_script = "echo Environment is: ${var.env} > C:\\test.txt"
 
 }

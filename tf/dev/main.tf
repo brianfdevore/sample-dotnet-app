@@ -1,4 +1,3 @@
-
 # Launch a single GCE instance
 module "win2016-instance" {
   source              = "../modules/win"
