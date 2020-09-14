@@ -48,15 +48,15 @@ pipeline {
             }
         }
         stage ('Infra-Deploy') {
-            agent { label 'windows' }
+            agent { label 'master' }
             steps {
                 echo 'Starting Terraform infrastructure deployment...'
-                bat '''
-                    cd tf/dev
-                    terraform init
-                    terraform apply -auto-approve
-                '''.stripIndent().trim()
-                //sh 'cd tf/dev && pwd && ls -la && terraform init && terraform apply -auto-approve'
+                // bat '''
+                //     cd tf/dev
+                //     terraform init
+                //     terraform apply -auto-approve
+                // '''.stripIndent().trim()
+                sh 'cd tf/dev && pwd && ls -la && terraform init && terraform apply -auto-approve'
                 echo 'Terraform infrastructure deployment completed successfully.'
             }
         }
