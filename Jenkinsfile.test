@@ -29,8 +29,8 @@ pipeline {
             steps {
                 echo "Running app deploy from Linux Agent in ${LOG_ENV}"
                 sh 'cd tf/dev'
-                sh 'terraform init'
-                sh 'terraform apply -auto-approve'
+                sh 'sudo terraform init'
+                sh 'sudo terraform apply -auto-approve'
             }
         }
     }
