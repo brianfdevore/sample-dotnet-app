@@ -52,7 +52,7 @@ pipeline {
             steps {
                 echo 'Starting Terraform infrastructure deployment...'
                 bat '''
-                    cd tf\dev
+                    cd tf/dev
                     terraform init
                     terraform apply -auto-approve
                 '''.stripIndent().trim()
